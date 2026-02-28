@@ -220,7 +220,7 @@ wifi_error nan_pairing_indication_response(transaction_id id,
 
         if ((secure_nan->dev_nik->nira_nonce_len +
              secure_nan->dev_nik->nira_tag_len) > PMKID_LEN) {
-            ALOGE("%s: Invalid nonce/tag len, nonce_len = %d, tag len = %d",
+            ALOGE("%s: Invalid nonce/tag len, nonce_len = %zu, tag len = %zu",
                   __FUNCTION__, secure_nan->dev_nik->nira_nonce_len,
                   secure_nan->dev_nik->nira_tag_len);
             goto fail;
@@ -282,7 +282,7 @@ wifi_error nan_pairing_indication_response(transaction_id id,
     peer->trans_id = id;
     peer->trans_id_valid = true;
     ret = handle_auth_pasn_1(pasn, secure_nan->own_addr, (u8 *)mgmt->sa, mgmt,
-                             peer->frame->len);
+                             peer->frame->len, false);
     if (ret == -1) {
         ALOGE("%s: Handle auth pasn 1 failed", __FUNCTION__);
         wpa_pasn_reset(pasn);
